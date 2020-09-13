@@ -2,6 +2,7 @@ package com.herokuapp.tests.TestCases;
 
 import com.herokuapp.utilities.WebDriverFactory;
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -69,19 +70,30 @@ public class TestCase6 {
 
         driver.navigate().to("https://www.tempmailaddress.com/");
 
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        Thread.sleep(5000);
 
         //locate fakeemail to open
         WebElement fakeemail = driver.findElement(By.xpath("//*[.='do-not-reply@practice.cybertekschool.com']"));
 
+        JavascriptExecutor jse = (JavascriptExecutor) driver;
+
         System.out.println(fakeemail.isDisplayed());
-        fakeemail.click();
+
+        jse.executeScript("arguments[0].click();",fakeemail);
+
+//        System.out.println(fakeemail.isDisplayed());
+//        fakeemail.click();
 
         //locate the sender
         WebElement sender = driver.findElement(By.id("odesilatel"));
         System.out.println(sender.getText());
         //verification
         Assert.assertTrue(sender.isDisplayed());
+
+        //locate the subject
+        WebElement subject = driver.findElement(By.id("predmet"));
+        System.out.println(subject.getText());
+        Assert.assertTrue(subject.isDisplayed());
 
 
     }
